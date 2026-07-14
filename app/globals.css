@@ -1,26 +1,81 @@
 @import "tailwindcss";
 
+/* ---- Design tokens (from the Creative Kids concept) ---- */
+@theme {
+  --color-navy: #12284b;
+  --color-navy-700: #1c3a66;
+  --color-sky: #3f9bd8;
+  --color-sky-700: #2b7bb3;
+  --color-sun: #f5c518;
+  --color-sun-700: #d9ab0d;
+  --color-coral: #ff6b6b;
+  --color-mint: #34c77b;
+  --color-powder: #eaf5fd;
+  --color-mist: #f6fbff;
+  --color-ink: #334966;
+  --color-ink-soft: #5a728e;
+  --color-line: #eaf3fb;
+
+  --font-fred: var(--font-fredoka), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: 24px;
+}
+
+/* ---- Base ---- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  color-scheme: light;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #fff;
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, .font-fred {
+  font-family: var(--font-fred);
+}
+
+::selection {
+  background: var(--color-sun);
+  color: var(--color-navy);
+}
+
+a {
+  color: inherit;
+}
+
+/* Consistent, accessible focus ring for keyboard users */
+:focus-visible {
+  outline: 3px solid var(--color-sky);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* ---- Motion (scoped to the hero, per the design brief) ---- */
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-16px); }
+}
+@keyframes floaty2 {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(12px) rotate(8deg); }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-floaty { animation: floaty 7s ease-in-out infinite; }
+.animate-floaty2 { animation: floaty2 9s ease-in-out infinite; }
+.animate-fade-up { animation: fadeUp 0.6s ease both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }
