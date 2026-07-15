@@ -8,6 +8,7 @@ import {
   PhaseCards,
   CtaBand,
 } from "@/components/sections";
+import { EventsCarousel } from "@/components/EventsCarousel";
 import { site } from "@/lib/site";
 
 export default function HomePage() {
@@ -28,9 +29,9 @@ export default function HomePage() {
               Crèche · Nursery · Primary · Secondary
             </span>
             <h1 className="mt-5 font-fred text-4xl font-bold leading-[1.05] text-navy sm:text-5xl lg:text-6xl">
-              Where little minds <span className="text-sky">dream</span>,{" "}
-              <span className="text-sun">play</span> &amp;{" "}
-              <span className="text-coral">grow</span>
+              Where creative minds <span className="text-sky">dream</span>,{" "}
+              <span className="text-sun">explore</span> &amp;{" "}
+              <span className="text-coral">lead</span>
             </h1>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-ink-soft sm:text-xl">
               A nurturing environment for your child — a warm, creative learning
@@ -88,6 +89,17 @@ export default function HomePage() {
       </Container>
 
       <StatBand />
+
+      {/* EVENTS */}
+      <Container className="py-16">
+        <SectionHeading
+          eyebrow="What's on"
+          title="Happening at Creative Kids"
+        />
+        <div className="mt-10">
+          <EventsCarousel nowFallback={new Date().getTime()} />
+        </div>
+      </Container>
 
       {/* VALUES */}
       <section className="bg-mist py-20">

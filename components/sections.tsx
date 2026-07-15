@@ -1,8 +1,26 @@
 import Link from "next/link";
+import {
+  Baby,
+  Shapes,
+  BookOpen,
+  FlaskConical,
+  GraduationCap,
+  type LucideIcon,
+} from "lucide-react";
 import { Container, SectionHeading } from "@/components/ui/Section";
 import { ButtonLink } from "@/components/ui/Button";
+import { YearsSince } from "@/components/ui/DynamicYear";
 import * as c from "@/lib/colors";
-import { stats, values, testimonials, phases } from "@/lib/content";
+import { stats, values, testimonials, phases, type PhaseId } from "@/lib/content";
+
+// One icon per school stage, shown in the phase card's coloured tile.
+const phaseIcon: Record<PhaseId, LucideIcon> = {
+  creche: Baby,
+  nursery: Shapes,
+  primary: BookOpen,
+  junior: FlaskConical,
+  senior: GraduationCap,
+};
 
 // Coloured icon tile (52px), text colour picked for contrast on its accent.
 function Tile({ accent, children }: { accent: c.Accent; children: React.ReactNode }) {
@@ -21,7 +39,13 @@ export function StatBand() {
         <div className="pointer-events-none absolute -bottom-12 left-[10%] h-28 w-28 rounded-full bg-sun/20" />
         {stats.map((s) => (
           <div key={s.label} className="relative z-10 text-center">
-            <div className="font-fred text-4xl font-bold leading-none text-sun sm:text-5xl">{s.num}</div>
+            <div className="font-fred text-4xl font-bold leading-none text-sun sm:text-5xl">
+              {s.sinceYear ? (
+                <YearsSince since={s.sinceYear} fallback={new Date().getFullYear()} />
+              ) : (
+                s.num
+              )}
+            </div>
             <div className="mt-2 text-[15px] font-bold text-powder">{s.label}</div>
           </div>
         ))}
@@ -77,18 +101,24 @@ export function Testimonials() {
 export function PhaseCards() {
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {phases.map((p) => (
+      {phases.map((p) => {
+        const Icon = phaseIcon[p.id];
+        const accent = p.color as c.Accent;
+        return (
         <Link
           key={p.id}
           href={`/academics?stage=${p.id}`}
-          className={`group rounded-[24px] border-2 border-[#eef5fb] bg-white p-6 shadow-[0_10px_26px_rgba(18,40,75,0.06)] transition-transform hover:-translate-y-2 border-t-[6px] ${c.borderTop[p.color as c.Accent]}`}
+          className={`group rounded-[24px] border-2 border-[#eef5fb] bg-white p-6 shadow-[0_10px_26px_rgba(18,40,75,0.06)] transition-transform hover:-translate-y-2 border-t-[6px] ${c.borderTop[accent]}`}
         >
-          <div className={`h-10 w-10 rounded-xl ${c.bg[p.color as c.Accent]}`} />
+          <div className={`flex h-12 w-12 items-center justify-center rounded-2xl ${c.bg[accent]}`}>
+            <Icon className={`h-6 w-6 ${c.onColorText[accent]}`} strokeWidth={2.2} aria-hidden />
+          </div>
           <h3 className="mt-4 font-fred text-xl font-bold text-navy">{p.name}</h3>
           <div className="mt-1 text-[13px] font-bold text-ink-soft">{p.age}</div>
           <div className="mt-3 text-[13px] font-extrabold text-sky">Explore →</div>
         </Link>
-      ))}
+        );
+      })}
     </div>
   );
 }

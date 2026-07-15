@@ -1,6 +1,8 @@
 // All page content for the site, kept in one typed place so copy lives
 // apart from layout. Sourced from creativekids.ng (real school content).
 
+import { site } from "@/lib/site";
+
 export type PhaseId = "creche" | "nursery" | "primary" | "junior" | "senior";
 
 export type Phase = {
@@ -109,10 +111,12 @@ export const values: Value[] = [
   { mark: "★", title: "Character & values", color: "sky", desc: "We raise kind, confident, responsible young people ready to lead and to solve real problems." },
 ];
 
-export type Stat = { num: string; label: string };
+// `num` is a fixed value; `sinceYear` instead computes "(this year − year)+"
+// on the client so it stays current without a rebuild (see YearsSince).
+export type Stat = { label: string; num?: string; sinceYear?: number };
 
 export const stats: Stat[] = [
-  { num: "15+", label: "Years of care" },
+  { label: "Years of care", sinceYear: site.founded },
   { num: "100+", label: "Happy parents" },
   { num: "5", label: "School stages" },
   { num: "2 – 17", label: "Ages welcomed" },
@@ -182,12 +186,20 @@ export const timeline: Milestone[] = [
   { year: "2022", title: "Secondary launches", desc: "In September, Creative Kids Elementary & High School welcomes its first secondary students." },
 ];
 
-export type EventItem = { date: string; title: string; desc: string; color: string };
+// `date` is an ISO day (YYYY-MM-DD) so events can be sorted and auto-expired
+// once the day passes — see the home Events slideshow and formatEventDate().
+export type EventItem = {
+  date: string;
+  title: string;
+  desc: string;
+  color: string;
+  image: string;
+};
 
 export const events: EventItem[] = [
-  { date: "June 9", title: "Open Day", desc: "Come and see the school for yourself — tour the campus, meet our teachers and explore the classrooms.", color: "sky" },
-  { date: "June 21", title: "Robotics & Art Exhibition", desc: "Our pupils showcase what they've built and created this term, from coding projects to canvas.", color: "sun" },
-  { date: "June 24", title: "Parents–Teachers Forum", desc: "An open conversation between families and staff about each child's progress and the term ahead.", color: "coral" },
+  { date: "2026-06-09", title: "Open Day", desc: "Come and see the school for yourself — tour the campus, meet our teachers and explore the classrooms.", color: "sky", image: "/photos/campus.jpg" },
+  { date: "2026-06-21", title: "Robotics & Art Exhibition", desc: "Our pupils showcase what they've built and created this term, from coding projects to canvas.", color: "sun", image: "/photos/stem-robotics.jpg" },
+  { date: "2026-06-24", title: "Parents–Teachers Forum", desc: "An open conversation between families and staff about each child's progress and the term ahead.", color: "coral", image: "/photos/community-outreach.jpg" },
 ];
 
 export type GalleryItem = { src: string; label: string; wide?: boolean };

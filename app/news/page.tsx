@@ -3,6 +3,7 @@ import { Container, SectionHeading } from "@/components/ui/Section";
 import { ButtonLink } from "@/components/ui/Button";
 import { CtaBand } from "@/components/sections";
 import { events } from "@/lib/content";
+import { formatEventDate } from "@/lib/dates";
 import * as c from "@/lib/colors";
 
 export const metadata: Metadata = {
@@ -39,7 +40,7 @@ export default function NewsPage() {
                 className={`overflow-hidden rounded-[24px] border-2 border-line bg-white ${c.borderTop[accent]} border-t-[6px]`}
               >
                 <div className={`px-6 py-5 ${c.bg[accent]} ${c.onColorText[accent]}`}>
-                  <div className="font-fred text-lg font-bold">{e.date}</div>
+                  <div className="font-fred text-lg font-bold">{formatEventDate(e.date)}</div>
                 </div>
                 <div className="p-6">
                   <h2 className="font-fred text-xl font-bold text-navy">{e.title}</h2>

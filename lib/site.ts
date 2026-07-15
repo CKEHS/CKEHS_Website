@@ -21,7 +21,9 @@ export const site = {
   ],
 
   emails: {
-    primary: "info@creativekids.ng",
+    // Using the working Gmail publicly for now; switch to info@creativekids.ng
+    // once that mailbox/forwarding is set up.
+    primary: "creativekidsacademyng@gmail.com",
     secondary: "creativekids.academy@yahoo.com",
   },
 
