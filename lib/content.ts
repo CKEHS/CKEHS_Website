@@ -167,16 +167,48 @@ export const classGroups: { stage: string; classes: string[] }[] = [
   { stage: "Senior Secondary", classes: ["Year 10", "Year 11"] },
 ];
 
-export type Staff = { name: string; role: string; initial: string; color: string };
+export type Staff = {
+  name: string;
+  role: string;
+  initial: string;
+  color: string;
+  photo?: string;
+  lead?: boolean; // shown larger / first in the hierarchy
+};
 
-export const staff: Staff[] = [
-  { name: "Mrs T. K. Adedeji", role: "Director", initial: "A", color: "navy" },
-  { name: "Mrs Qadri Omotola", role: "Head Teacher", initial: "Q", color: "sky" },
-  { name: "Mrs Anikoh Victoria", role: "Head of Nursery", initial: "V", color: "sun" },
-  { name: "Mrs Olatunji Kemisola", role: "Head of Primary", initial: "K", color: "coral" },
-  { name: "Mr Abdul Azeez Taiwo", role: "Secondary Coordinator", initial: "T", color: "mint" },
-  { name: "Mrs Gafar Momodu", role: "Admin Officer", initial: "M", color: "sky" },
+// The Director is featured separately via her message, so she's not in the grid.
+// Ordered by seniority. Photos are placeholders — drop a real headshot in at the
+// same path (e.g. public/staff/head-teacher.jpg) and it appears automatically.
+export const team: Staff[] = [
+  { name: "Mrs Qadri Omotola", role: "Head Teacher", initial: "Q", color: "sky", photo: "/staff/head-teacher.jpg", lead: true },
+  { name: "Mrs Durowaye Sophia", role: "Assistant Head Teacher", initial: "D", color: "coral", photo: "/staff/assistant-head-teacher.jpg" },
+  { name: "Mrs Anikoh Victoria", role: "Head of Nursery", initial: "V", color: "sun", photo: "/staff/head-nursery.jpg" },
+  { name: "Miss Liliberth Ukagah", role: "Assistant Head of Nursery", initial: "L", color: "mint", photo: "/staff/assistant-head-nursery.jpg" },
+  { name: "Mrs Olatunji Kemisola", role: "Head of Primary", initial: "K", color: "sky", photo: "/staff/head-primary.jpg" },
+  { name: "Mr Abdul Azeez Taiwo", role: "Secondary Coordinator", initial: "T", color: "coral", photo: "/staff/secondary-coord.jpg" },
+  { name: "Mr Aregbeshola Ridwan", role: "Examination Officer", initial: "R", color: "sun", photo: "/staff/exam-officer.jpg" },
+  { name: "Mrs Gafar Momodu", role: "Admin Officer", initial: "M", color: "mint", photo: "/staff/admin-officer.jpg" },
 ];
+
+// The Director's welcome address (from the live site, lightly tidied).
+// Add `photo` once we have a headshot of the Director.
+export const director: {
+  name: string;
+  role: string;
+  initial: string;
+  photo?: string;
+  paragraphs: string[];
+} = {
+  name: "Mrs T. K. Adedeji",
+  role: "Director",
+  initial: "A",
+  paragraphs: [
+    "Dear Students, Parents, and Guardians, it gives me immense pleasure to welcome you all to our school. Creative Kids is an institution that believes in providing holistic education to every student, right from Playgroup to Secondary level — nurturing not just academic excellence, but character, social and emotional growth.",
+    "We follow a comprehensive, innovative curriculum designed for the unique needs of every child, so each one can reach their full potential. Our faculty are highly qualified, experienced teachers who are passionate about guiding young minds in a safe, inclusive space where everyone is respected, valued and encouraged to grow.",
+    "We understand that parents play a crucial role in their child's education, and we work to maintain constant communication and transparency, warmly encouraging families to take part in school life.",
+    "We are committed to a quality education that equips our students for the challenges of the 21st century — confident that they will go on to become leaders and changemakers who make a positive impact on the world. Thank you for considering Creative Kids for your child; we look forward to welcoming you to our community.",
+  ],
+};
 
 export const clubs: string[] = [
   "Entrepreneur Club",

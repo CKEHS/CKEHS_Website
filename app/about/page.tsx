@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { Container, SectionHeading } from "@/components/ui/Section";
-import { ValueCards, CtaBand } from "@/components/sections";
+import { CtaBand } from "@/components/sections";
 import * as c from "@/lib/colors";
-import { timeline, staff, clubs } from "@/lib/content";
+import { timeline, team, director, clubs } from "@/lib/content";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -125,33 +125,80 @@ export default function AboutPage() {
         </ol>
       </Container>
 
-      {/* Staff */}
+      {/* Director's message */}
       <section className="bg-mist py-16">
+        <Container className="max-w-4xl">
+          <SectionHeading eyebrow="A word from our Director" title="Welcome to Creative Kids" />
+          <div className="mt-8 grid gap-6 md:grid-cols-[260px_1fr] md:items-start">
+            {/* Portrait (her photo, or the crest as a branded placeholder) */}
+            <div className="relative mx-auto aspect-[3/4] w-52 overflow-hidden rounded-[24px] border-[6px] border-white shadow-[0_14px_36px_rgba(18,40,75,0.16)] md:mx-0 md:w-full">
+              {director.photo ? (
+                <Image src={director.photo} alt={director.name} fill sizes="260px" className="object-cover object-top" />
+              ) : (
+                <div className="flex h-full w-full items-center justify-center bg-navy p-6">
+                  <Image src="/logo-white.png" alt="Creative Kids Academy" width={280} height={80} className="w-full" />
+                </div>
+              )}
+            </div>
+
+            {/* Message + signature */}
+            <div className="rounded-[24px] border border-line bg-white p-7 shadow-[0_10px_30px_rgba(18,40,75,0.06)] sm:p-9">
+              <div className="space-y-4 leading-relaxed text-ink-soft">
+                {director.paragraphs.map((p, i) => (
+                  <p
+                    key={i}
+                    className={
+                      i === 0
+                        ? "first-letter:float-left first-letter:mr-2 first-letter:mt-1 first-letter:font-fred first-letter:text-5xl first-letter:font-bold first-letter:leading-none first-letter:text-sky"
+                        : ""
+                    }
+                  >
+                    {p}
+                  </p>
+                ))}
+              </div>
+              <div className="mt-6 border-t border-line pt-5">
+                <div className="font-fred text-lg font-bold text-navy">{director.name}</div>
+                <div className="text-sm font-bold text-sky">{director.role}</div>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* Team */}
+      <section className="py-16">
         <Container>
-          <SectionHeading eyebrow="Our people" title="Meet the team" />
-          <div className="mt-11 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {staff.map((s) => (
-              <div key={s.name} className="flex items-center gap-4 rounded-[22px] bg-white p-5 shadow-[0_8px_24px_rgba(18,40,75,0.06)]">
-                <span className={`flex h-14 w-14 flex-none items-center justify-center rounded-2xl font-fred text-2xl font-bold ${c.bg[s.color as c.Accent]} ${c.onColorText[s.color as c.Accent]}`}>
-                  {s.initial}
-                </span>
-                <span>
-                  <span className="block font-fred text-lg font-bold text-navy">{s.name}</span>
-                  <span className="block text-sm font-bold text-ink-soft">{s.role}</span>
-                </span>
+          <SectionHeading
+            eyebrow="Our people"
+            title="School Leadership Team"
+            intro="Every staff member at Creative Kids plays a critical role in delivering our vision of excellent education."
+          />
+
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {team.map((s) => (
+              <div
+                key={s.name}
+                className="overflow-hidden rounded-[24px] border border-line bg-white shadow-[0_8px_24px_rgba(18,40,75,0.06)]"
+              >
+                <div className="relative aspect-[4/5]">
+                  {s.photo ? (
+                    <Image src={s.photo} alt={s.name} fill sizes="(max-width:1024px) 50vw, 300px" className="object-cover object-top" />
+                  ) : (
+                    <div className={`flex h-full w-full items-center justify-center ${c.bg[s.color as c.Accent]}`}>
+                      <span className={`font-fred text-5xl font-bold ${c.onColorText[s.color as c.Accent]}`}>{s.initial}</span>
+                    </div>
+                  )}
+                </div>
+                <div className="p-5">
+                  <div className="font-fred text-lg font-bold text-navy">{s.name}</div>
+                  <div className={`mt-0.5 text-sm font-bold ${c.text[s.color as c.Accent]}`}>{s.role}</div>
+                </div>
               </div>
             ))}
           </div>
         </Container>
       </section>
-
-      {/* Values */}
-      <Container className="py-16">
-        <SectionHeading eyebrow="What we stand for" title="Our values" />
-        <div className="mt-11">
-          <ValueCards />
-        </div>
-      </Container>
 
       <CtaBand
         title="Ready to join the family?"
