@@ -119,7 +119,7 @@ export const stats: Stat[] = [
   { label: "Years of care", sinceYear: site.founded },
   { num: "100+", label: "Happy parents" },
   { num: "5", label: "School stages" },
-  { num: "3", label: "Blended curricula" },
+  { num: "1000+", label: "Students & alumni" },
 ];
 
 export type Testimonial = { quote: string; name: string; role: string; initial: string };
