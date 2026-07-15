@@ -10,33 +10,45 @@ export const metadata: Metadata = {
     "Visit Creative Kids Academy at Plot L182 Ellicot Citi Street, Kubwa Extension III, Abuja. Call, email or message us — our doors are always open to families.",
 };
 
-const cards = [
+// Search by the school's Google business listing (not the raw plot address,
+// which geocodes to the wrong spot) so the map lands on the school with a pin.
+const mapQuery = encodeURIComponent(`${site.name} Kubwa Abuja`);
+const mapLink = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
+
+type Line = { text: string; href?: string };
+
+const cards: {
+  mark: string;
+  title: string;
+  accent: c.Accent;
+  lines: Line[];
+  sub: string;
+}[] = [
   {
     mark: "⌂",
     title: "Visit",
-    accent: "sky" as c.Accent,
-    lines: [site.address.line, site.address.city],
+    accent: "sky",
+    lines: [
+      { text: site.address.line, href: mapLink },
+      { text: site.address.city, href: mapLink },
+    ],
     sub: "Open Mon–Fri, 8:00am – 3:00pm",
   },
   {
     mark: "☎",
     title: "Call",
-    accent: "sun" as c.Accent,
-    lines: site.phones.map((p) => p.display),
+    accent: "sun",
+    lines: site.phones.map((p) => ({ text: p.display, href: `tel:${p.tel}` })),
     sub: "Admissions team, 8am – 3pm",
   },
   {
     mark: "✉",
     title: "Email",
-    accent: "coral" as c.Accent,
-    lines: [site.emails.primary, site.emails.secondary],
+    accent: "coral",
+    lines: [{ text: site.emails.primary, href: `mailto:${site.emails.primary}` }],
     sub: "We reply within 24 hours",
   },
 ];
-
-const mapQuery = encodeURIComponent(
-  `${site.address.line}, ${site.address.city}, ${site.address.country}`,
-);
 
 export default function ContactPage() {
   return (
@@ -63,9 +75,21 @@ export default function ContactPage() {
               <span className={`font-fred text-2xl font-bold ${c.onColorText[card.accent]}`}>{card.mark}</span>
             </div>
             <h3 className="mt-4 font-fred text-lg font-bold text-navy">{card.title}</h3>
-            {card.lines.map((line) => (
-              <p key={line} className="font-semibold text-ink">{line}</p>
-            ))}
+            {card.lines.map((line) =>
+              line.href ? (
+                <a
+                  key={line.text}
+                  href={line.href}
+                  target={line.href.startsWith("http") ? "_blank" : undefined}
+                  rel={line.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  className="block font-semibold text-ink transition-colors hover:text-sky"
+                >
+                  {line.text}
+                </a>
+              ) : (
+                <p key={line.text} className="font-semibold text-ink">{line.text}</p>
+              ),
+            )}
             <p className="mt-1 text-[13px] text-ink-soft">{card.sub}</p>
           </div>
         ))}
@@ -107,7 +131,7 @@ export default function ContactPage() {
         <div className="overflow-hidden rounded-[28px] border-[6px] border-white shadow-[0_16px_40px_rgba(18,40,75,0.12)]">
           <iframe
             title="Creative Kids Academy location"
-            src={`https://www.google.com/maps?q=${mapQuery}&output=embed`}
+            src={`https://www.google.com/maps?q=${mapQuery}&z=16&output=embed`}
             className="h-[380px] w-full"
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
