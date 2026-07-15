@@ -210,13 +210,17 @@ export const director: {
   ],
 };
 
-export const clubs: string[] = [
-  "Entrepreneur Club",
-  "Language Club — Mandarin, French & Hausa",
-  "Coding & Robotics (New Horizons partnership)",
-  "Music, drama & cultural arts",
-  "Sports & house competitions",
-  "Science & discovery",
+// Extracurricular activities — part of the wider curriculum, shown on Academics.
+// `icon` is a lucide-react icon name (mapped to the component in the page).
+export type Activity = { name: string; desc: string; icon: string; color: string };
+
+export const activities: Activity[] = [
+  { name: "Entrepreneur Club", desc: "Hands-on business and money skills that build confidence, creativity and real-world problem-solving.", icon: "Store", color: "sky" },
+  { name: "Language Club", desc: "Mandarin, French and Hausa — opening children's ears and minds to the wider world.", icon: "Languages", color: "coral" },
+  { name: "Coding & Robotics", desc: "Building and programming through our New Horizons partnership — tomorrow's skills today.", icon: "Bot", color: "mint" },
+  { name: "Music, Drama & Arts", desc: "Singing, performance and cultural expression woven right through the school week.", icon: "Music", color: "sun" },
+  { name: "Sports & House Competitions", desc: "Teamwork, fitness and friendly rivalry across our school houses.", icon: "Trophy", color: "sky" },
+  { name: "Science & Discovery", desc: "Curious minds exploring how the world works, hands-on.", icon: "FlaskConical", color: "coral" },
 ];
 
 export type Milestone = { year: string; title: string; desc: string };

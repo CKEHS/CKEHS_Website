@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Container, SectionHeading } from "@/components/ui/Section";
 import { CtaBand } from "@/components/sections";
 import * as c from "@/lib/colors";
-import { timeline, team, director, clubs } from "@/lib/content";
+import { timeline, team, director } from "@/lib/content";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -64,47 +64,6 @@ export default function AboutPage() {
           </div>
         ))}
       </Container>
-
-      {/* Approach + image */}
-      <section className="bg-mist py-16">
-        <Container className="flex flex-wrap items-center gap-12">
-          <div className="flex-1 basis-[320px]">
-            <SectionHeading
-              center={false}
-              eyebrow="Our approach"
-              title="Montessori roots, world-class curriculum"
-            />
-            <p className="mt-4 leading-relaxed text-ink-soft">
-              We blend the Montessori method with the Nigerian and British
-              (Cambridge) curricula for children aged two to seventeen. Alongside
-              strong academics, we teach the skills that build character and
-              solve real-life problems — which is why so many of our little ones
-              are joining words by age three.
-            </p>
-            <ul className="mt-6 grid gap-3 sm:grid-cols-2">
-              {clubs.map((club) => (
-                <li key={club} className="flex items-start gap-2.5">
-                  <span className="mt-1 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-mint text-xs font-bold text-white">
-                    ✓
-                  </span>
-                  <span className="font-semibold text-navy">{club}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="relative min-w-[280px] flex-1 basis-[320px]">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-[28px] border-[6px] border-white shadow-[0_18px_44px_rgba(18,40,75,0.16)]">
-              <Image
-                src="/photos/about-approach.jpg"
-                alt="A teacher working closely with pupils at Creative Kids Academy"
-                fill
-                sizes="(max-width: 1024px) 100vw, 520px"
-                className="object-cover"
-              />
-            </div>
-          </div>
-        </Container>
-      </section>
 
       {/* Timeline */}
       <Container className="py-16">
