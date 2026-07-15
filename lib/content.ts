@@ -119,7 +119,7 @@ export const stats: Stat[] = [
   { label: "Years of care", sinceYear: site.founded },
   { num: "100+", label: "Happy parents" },
   { num: "5", label: "School stages" },
-  { num: "2 – 17", label: "Ages welcomed" },
+  { num: "3", label: "Blended curricula" },
 ];
 
 export type Testimonial = { quote: string; name: string; role: string; initial: string };
@@ -151,10 +151,20 @@ export const testimonials: Testimonial[] = [
 export type Step = { n: string; title: string; desc: string };
 
 export const admissionSteps: Step[] = [
-  { n: "1", title: "Enquire", desc: "Send us a message or give us a call — tell us a little about your child." },
-  { n: "2", title: "Visit us", desc: "Tour the campus, meet the teachers and see our classrooms in action." },
-  { n: "3", title: "Apply", desc: "Complete a simple application and share your child's records." },
-  { n: "4", title: "Welcome!", desc: "A friendly settling-in visit, then your child joins the family." },
+  { n: "1", title: "Enquire", desc: "Send us a message or give us a call, and tell us a little about your child." },
+  { n: "2", title: "Apply", desc: "Complete the application form. Depending on the class, your child may sit a short assessment." },
+  { n: "3", title: "Welcome!", desc: "Settle the fees and come in for a friendly settling-in visit — then your child joins the family." },
+];
+
+// Classes offered, grouped by stage — powers the admissions form dropdown.
+// Secondary uses the British "Year" naming (Year 7 = JSS 1 … Year 11 = SSS 2).
+// NOTE: confirm the primary/nursery names against the school's actual list.
+export const classGroups: { stage: string; classes: string[] }[] = [
+  { stage: "Crèche & Daycare", classes: ["Crèche"] },
+  { stage: "Nursery & Pre-school", classes: ["Pre-Nursery", "Nursery 1", "Nursery 2", "Kindergarten"] },
+  { stage: "Primary", classes: ["Grade 1", "Grade 2", "Grade 3", "Grade 4", "Grade 5", "Grade 6"] },
+  { stage: "Junior Secondary", classes: ["Year 7", "Year 8", "Year 9"] },
+  { stage: "Senior Secondary", classes: ["Year 10", "Year 11"] },
 ];
 
 export type Staff = { name: string; role: string; initial: string; color: string };

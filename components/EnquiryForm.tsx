@@ -4,7 +4,7 @@ import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import Link from "next/link";
 import { sendEnquiry, type EnquiryState } from "@/app/actions";
-import { phases } from "@/lib/content";
+import { classGroups } from "@/lib/content";
 import { site } from "@/lib/site";
 
 const initial: EnquiryState = { status: "idle" };
@@ -85,6 +85,37 @@ export function EnquiryForm({
           <input name="name" placeholder="Full name" className={inputCls} autoComplete="name" />
           {err.name && <span className="font-semibold text-coral">{err.name}</span>}
         </label>
+
+        {kind === "admissions" && (
+          <>
+            <label className={labelCls}>
+              Child&rsquo;s name
+              <input name="childName" placeholder="Your child's full name" className={inputCls} />
+            </label>
+            <label className={labelCls}>
+              Child&rsquo;s age
+              <input name="childAge" placeholder="e.g. 4 years" className={inputCls} />
+            </label>
+            <label className={labelCls}>
+              Which class?
+              <select name="childClass" className={inputCls} defaultValue="">
+                <option value="" disabled>
+                  Choose a class…
+                </option>
+                {classGroups.map((group) => (
+                  <optgroup key={group.stage} label={group.stage}>
+                    {group.classes.map((cls) => (
+                      <option key={cls} value={cls}>
+                        {cls}
+                      </option>
+                    ))}
+                  </optgroup>
+                ))}
+              </select>
+            </label>
+          </>
+        )}
+
         <label className={labelCls}>
           Phone number
           <input name="phone" placeholder="0803 …" className={inputCls} autoComplete="tel" inputMode="tel" />
@@ -95,29 +126,7 @@ export function EnquiryForm({
           <input name="email" placeholder="you@email.com" className={inputCls} autoComplete="email" inputMode="email" />
           {err.email && <span className="font-semibold text-coral">{err.email}</span>}
         </label>
-        {kind === "admissions" && (
-          <label className={labelCls}>
-            Child&rsquo;s age
-            <input name="childAge" placeholder="e.g. 4 years" className={inputCls} />
-          </label>
-        )}
       </div>
-
-      {kind === "admissions" && (
-        <label className={`${labelCls} mt-4`}>
-          Which programme?
-          <select name="programme" className={inputCls} defaultValue="">
-            <option value="" disabled>
-              Choose a stage…
-            </option>
-            {phases.map((p) => (
-              <option key={p.id} value={p.name}>
-                {p.name} ({p.age})
-              </option>
-            ))}
-          </select>
-        </label>
-      )}
 
       <label className={`${labelCls} mt-4`}>
         {kind === "admissions" ? "Anything you'd like us to know?" : "Your message"}

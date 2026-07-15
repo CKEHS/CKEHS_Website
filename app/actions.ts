@@ -37,8 +37,9 @@ export async function sendEnquiry(
   const name = ((formData.get("name") as string) || "").trim();
   const email = ((formData.get("email") as string) || "").trim();
   const phone = ((formData.get("phone") as string) || "").trim();
+  const childName = ((formData.get("childName") as string) || "").trim();
   const childAge = ((formData.get("childAge") as string) || "").trim();
-  const programme = ((formData.get("programme") as string) || "").trim();
+  const childClass = ((formData.get("childClass") as string) || "").trim();
   const message = ((formData.get("message") as string) || "").trim();
 
   const errors: Record<string, string> = {};
@@ -74,8 +75,9 @@ export async function sendEnquiry(
     `Name: ${name}`,
     phone && `Phone: ${phone}`,
     email && `Email: ${email}`,
+    childName && `Child's name: ${childName}`,
     childAge && `Child's age: ${childAge}`,
-    programme && `Programme: ${programme}`,
+    childClass && `Class applying for: ${childClass}`,
     "",
     "Message:",
     message || "(none)",

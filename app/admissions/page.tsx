@@ -29,9 +29,9 @@ export default function AdmissionsPage() {
 
       {/* Steps */}
       <Container className="pt-16">
-        <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <ol className="grid gap-4 sm:grid-cols-3">
           {admissionSteps.map((s, i) => {
-            const accent = (["sky", "sun", "coral", "mint"] as c.Accent[])[i % 4];
+            const accent = (["sky", "sun", "coral"] as c.Accent[])[i % 3];
             return (
               <li key={s.n} className="rounded-[24px] border-2 border-line bg-white p-6">
                 <div className={`flex h-12 w-12 items-center justify-center rounded-2xl font-fred text-xl font-bold ${c.bg[accent]} ${c.onColorText[accent]}`}>
