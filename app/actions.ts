@@ -28,11 +28,6 @@ export async function sendEnquiry(
   _prev: EnquiryState,
   formData: FormData,
 ): Promise<EnquiryState> {
-  // Honeypot: real users never fill a hidden field.
-  if ((formData.get("company") as string)?.trim()) {
-    return { status: "success", message: "Thanks — we'll be in touch soon." };
-  }
-
   const kind = (formData.get("kind") as string) || "enquiry";
   const name = ((formData.get("name") as string) || "").trim();
   const email = ((formData.get("email") as string) || "").trim();
@@ -91,13 +86,14 @@ export async function sendEnquiry(
       auth: { user, pass },
     });
 
-    await transport.sendMail({
+    const info = await transport.sendMail({
       from: `"Creative Kids Website" <${user}>`,
       to,
       replyTo: email || undefined,
       subject: `${subjectKind}: ${name}`,
       text: lines.join("\n"),
     });
+    console.log("[sendEnquiry] sent to", to, "messageId:", info.messageId);
 
     return {
       status: "success",

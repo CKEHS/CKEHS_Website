@@ -71,13 +71,6 @@ export function EnquiryForm({
       )}
 
       <input type="hidden" name="kind" value={kind} />
-      {/* Honeypot — visually hidden, ignored by humans */}
-      <div aria-hidden className="absolute left-[-9999px]" style={{ position: "absolute", left: "-9999px" }}>
-        <label>
-          Company
-          <input type="text" name="company" tabIndex={-1} autoComplete="off" />
-        </label>
-      </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
         <label className={labelCls}>
