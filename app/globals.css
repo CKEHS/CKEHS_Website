@@ -72,6 +72,12 @@ a {
 .animate-floaty2 { animation: floaty2 9s ease-in-out infinite; }
 .animate-fade-up { animation: fadeUp 0.6s ease both; }
 
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-fade-in { animation: fadeIn 0.5s ease both; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;

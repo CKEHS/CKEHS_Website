@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { ArrowRight, ArrowDown } from "lucide-react";
 import { Container, SectionHeading } from "@/components/ui/Section";
+import { RevealZoom } from "@/components/ui/RevealZoom";
 import { CtaBand } from "@/components/sections";
 import * as c from "@/lib/colors";
 import { timeline, team, director } from "@/lib/content";
@@ -68,16 +70,27 @@ export default function AboutPage() {
       {/* Timeline */}
       <Container className="py-16">
         <SectionHeading eyebrow="Our journey" title="How we grew" />
-        <ol className="mt-11 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <ol className="mt-11 flex flex-col gap-4 lg:flex-row lg:items-stretch lg:gap-3">
           {timeline.map((m, i) => {
             const accent = (["coral", "sun", "mint", "sky"] as c.Accent[])[i % 4];
+            const isLast = i === timeline.length - 1;
             return (
-              <li key={m.year} className="rounded-[24px] border-2 border-line bg-white p-6">
-                <div className={`inline-flex rounded-full px-4 py-1.5 font-fred text-lg font-bold ${c.bg[accent]} ${c.onColorText[accent]}`}>
-                  {m.year}
-                </div>
-                <h3 className="mt-3 font-fred text-lg font-bold text-navy">{m.title}</h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">{m.desc}</p>
+              <li key={m.year} className="flex flex-col items-stretch gap-4 lg:flex-1 lg:flex-row lg:items-stretch">
+                <RevealZoom delay={i * 150} className="flex-1">
+                  <div className="flex h-full flex-col rounded-[24px] border-2 border-line bg-white p-6">
+                    <div className={`inline-flex rounded-full px-4 py-1.5 font-fred text-lg font-bold ${c.bg[accent]} ${c.onColorText[accent]}`}>
+                      {m.year}
+                    </div>
+                    <h3 className="mt-3 font-fred text-lg font-bold text-navy">{m.title}</h3>
+                    <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">{m.desc}</p>
+                  </div>
+                </RevealZoom>
+                {!isLast && (
+                  <div className="flex flex-none items-center justify-center text-sky" aria-hidden>
+                    <ArrowDown className="h-6 w-6 lg:hidden" strokeWidth={2.5} />
+                    <ArrowRight className="hidden h-6 w-6 lg:block" strokeWidth={2.5} />
+                  </div>
+                )}
               </li>
             );
           })}

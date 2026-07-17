@@ -10,6 +10,8 @@ import {
 import { Container, SectionHeading } from "@/components/ui/Section";
 import { ButtonLink } from "@/components/ui/Button";
 import { YearsSince } from "@/components/ui/DynamicYear";
+import { CountUp } from "@/components/ui/CountUp";
+import { TestimonialSlideshow } from "@/components/TestimonialSlideshow";
 import * as c from "@/lib/colors";
 import { stats, values, testimonials, phases, type PhaseId } from "@/lib/content";
 
@@ -37,18 +39,23 @@ export function StatBand() {
       <div className="relative grid gap-8 overflow-hidden rounded-[32px] bg-navy px-6 py-11 sm:grid-cols-2 lg:grid-cols-4">
         <div className="pointer-events-none absolute -right-8 -top-10 h-40 w-40 rounded-full bg-sky/30" />
         <div className="pointer-events-none absolute -bottom-12 left-[10%] h-28 w-28 rounded-full bg-sun/20" />
-        {stats.map((s) => (
-          <div key={s.label} className="relative z-10 text-center">
-            <div className="font-fred text-4xl font-bold leading-none text-sun sm:text-5xl">
-              {s.sinceYear ? (
-                <YearsSince since={s.sinceYear} fallback={new Date().getFullYear()} />
-              ) : (
-                s.num
-              )}
+        {stats.map((s) => {
+          const parsed = s.num?.match(/^(\d+)(.*)$/);
+          return (
+            <div key={s.label} className="relative z-10 text-center">
+              <div className="font-fred text-4xl font-bold leading-none text-sun sm:text-5xl">
+                {s.sinceYear ? (
+                  <YearsSince since={s.sinceYear} fallback={new Date().getFullYear()} />
+                ) : parsed ? (
+                  <CountUp end={Number(parsed[1])} suffix={parsed[2]} />
+                ) : (
+                  s.num
+                )}
+              </div>
+              <div className="mt-2 text-[15px] font-bold text-powder">{s.label}</div>
             </div>
-            <div className="mt-2 text-[15px] font-bold text-powder">{s.label}</div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </Container>
   );
@@ -68,32 +75,11 @@ export function ValueCards() {
   );
 }
 
-const testiBg = ["bg-powder", "bg-[#fff6d6]", "bg-[#e7f7ee]"];
-const testiAvatar: c.Accent[] = ["sky", "sun", "mint"];
-
 export function Testimonials() {
   return (
     <Container className="py-16">
       <SectionHeading eyebrow="Loved by parents" title="Words from our families" />
-      <div className="mt-11 grid gap-5 md:grid-cols-3">
-        {testimonials.map((t, i) => (
-          <figure key={t.name} className={`rounded-[24px] p-7 ${testiBg[i % 3]}`}>
-            <div className="font-fred text-5xl leading-none text-sun" style={{ height: 22 }}>
-              &ldquo;
-            </div>
-            <blockquote className="mt-3 font-semibold leading-relaxed text-navy">{t.quote}</blockquote>
-            <figcaption className="mt-5 flex items-center gap-3">
-              <span className={`flex h-11 w-11 flex-none items-center justify-center rounded-full font-fred text-lg font-bold ${c.bg[testiAvatar[i % 3]]} ${c.onColorText[testiAvatar[i % 3]]}`}>
-                {t.initial}
-              </span>
-              <span>
-                <span className="block font-fred font-bold text-navy">{t.name}</span>
-                <span className="block text-xs font-bold text-ink-soft">{t.role}</span>
-              </span>
-            </figcaption>
-          </figure>
-        ))}
-      </div>
+      <TestimonialSlideshow testimonials={testimonials} />
     </Container>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import { CountUp } from "@/components/ui/CountUp";
 
 // Year-derived values must reflect the *visitor's* current year, not the year
 // the site was built. On a static build `new Date()` runs once at build time and
@@ -34,10 +35,5 @@ export function YearsSince({
   fallback: number;
   suffix?: string;
 }) {
-  return (
-    <>
-      {useClientYear(fallback) - since}
-      {suffix}
-    </>
-  );
+  return <CountUp end={useClientYear(fallback) - since} suffix={suffix} />;
 }
