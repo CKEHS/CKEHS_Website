@@ -5,15 +5,39 @@ import type { EventItem } from "@/lib/content";
 import { formatEventDate, eventStartOfDay } from "@/lib/dates";
 import * as c from "@/lib/colors";
 
-const PAGE_SIZE = 3;
+const PAGE_SIZE_DESKTOP = 3;
 const SLIDE_MS = 10000;
 
-// "Now" has to be read in the browser, otherwise a static build would freeze
-// today's date and events would never move from upcoming to past.
-// useSyncExternalStore keeps SSR (using the build-time `fallback`) hydration-safe.
+// Today's date has to be read in the browser, otherwise a static build would
+// freeze it and events would never move from upcoming to past. The snapshot
+// is truncated to day-granularity on purpose: React re-invokes getSnapshot
+// after every commit to check for consistency, and a millisecond-precision
+// value (e.g. raw Date.now()) never matches between those calls — that
+// mismatch forces another re-render every time, looping forever. Truncated
+// to a day, it's stable except right at midnight.
 const subscribe = () => () => {};
-function useNow(fallback: number) {
-  return useSyncExternalStore(subscribe, () => Date.now(), () => fallback);
+function getTodaySnapshot(): number {
+  return startOfToday(Date.now());
+}
+function useToday(fallback: number) {
+  return useSyncExternalStore(subscribe, getTodaySnapshot, () => startOfToday(fallback));
+}
+
+// Below the `md` breakpoint, page one event at a time instead of three —
+// matches Tailwind's `md:grid-cols-3` used for the card grid itself. Starts
+// at the desktop count (matching SSR) and corrects after mount.
+function useItemsPerPage() {
+  const [n, setN] = useState(PAGE_SIZE_DESKTOP);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const update = () => setN(mq.matches ? PAGE_SIZE_DESKTOP : 1);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  return n;
 }
 
 function startOfToday(now: number): number {
@@ -43,12 +67,21 @@ function EventCard({ e }: { e: EventItem }) {
   );
 }
 
-// Pages through `items` three at a time, auto-advancing every 10s once
-// there are more than three. Mounting with a fresh `key` (see the `tab`
-// switch below) restarts paging at 0 rather than carrying over an index
-// that may not exist in the new list.
-function EventsPager({ items, emptyMessage }: { items: EventItem[]; emptyMessage: string }) {
-  const pages = chunk(items, PAGE_SIZE);
+// Pages through `items` `perPage` at a time (one on mobile, three from `md`
+// up), auto-advancing every 10s once there's more than one page. The parent
+// remounts this via `key` on both `tab` and `perPage` changes, so paging
+// always restarts at 0 rather than carrying over an index that may not
+// exist in the new list.
+function EventsPager({
+  items,
+  perPage,
+  emptyMessage,
+}: {
+  items: EventItem[];
+  perPage: number;
+  emptyMessage: string;
+}) {
+  const pages = chunk(items, perPage);
   const pageCount = pages.length;
   const [page, setPage] = useState(0);
 
@@ -103,8 +136,8 @@ export function EventsGridSlideshow({
   events: EventItem[];
   nowFallback: number;
 }) {
-  const now = useNow(nowFallback);
-  const today = startOfToday(now);
+  const today = useToday(nowFallback);
+  const perPage = useItemsPerPage();
 
   const upcoming = events
     .filter((e) => eventStartOfDay(e.date) >= today)
@@ -136,8 +169,9 @@ export function EventsGridSlideshow({
 
       <div className="mt-8">
         <EventsPager
-          key={tab}
+          key={`${tab}-${perPage}`}
           items={groups[tab]}
+          perPage={perPage}
           emptyMessage={
             tab === "upcoming"
               ? "More events coming soon — check back for what's next."

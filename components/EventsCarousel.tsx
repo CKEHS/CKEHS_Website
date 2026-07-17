@@ -7,18 +7,24 @@ import { events } from "@/lib/content";
 import { formatEventDate, eventStartOfDay } from "@/lib/dates";
 import * as c from "@/lib/colors";
 
-// "Now" has to be read in the browser, otherwise a static build would freeze
-// today's date and events would never expire. useSyncExternalStore keeps SSR
-// (using the build-time `fallback`) hydration-safe.
+// Today's date has to be read in the browser, otherwise a static build would
+// freeze it and events would never expire. The snapshot is truncated to
+// day-granularity on purpose: React re-invokes getSnapshot after every
+// commit to check for consistency, and a millisecond-precision value (e.g.
+// raw Date.now()) never matches between those calls — that mismatch forces
+// another re-render every time, looping forever. Truncated to a day, it's
+// stable except right at midnight.
 const subscribe = () => () => {};
-function useNow(fallback: number) {
-  return useSyncExternalStore(subscribe, () => Date.now(), () => fallback);
-}
-
 function startOfToday(now: number): number {
   const d = new Date(now);
   d.setHours(0, 0, 0, 0);
   return d.getTime();
+}
+function getTodaySnapshot(): number {
+  return startOfToday(Date.now());
+}
+function useToday(fallback: number) {
+  return useSyncExternalStore(subscribe, getTodaySnapshot, () => startOfToday(fallback));
 }
 
 const cardShell =
@@ -28,8 +34,7 @@ const bodyWrap = "flex flex-col justify-center p-8 sm:p-10";
 const linkCls = "mt-5 w-fit font-fred font-semibold text-sky transition-colors hover:text-navy";
 
 export function EventsCarousel({ nowFallback }: { nowFallback: number }) {
-  const now = useNow(nowFallback);
-  const today = startOfToday(now);
+  const today = useToday(nowFallback);
 
   // Only events today or later, soonest first.
   const upcoming = events

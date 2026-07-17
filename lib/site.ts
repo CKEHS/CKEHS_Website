@@ -38,7 +38,7 @@ export const site = {
 
   socials: {
     facebook: "https://web.facebook.com/creativekids.kubwa",
-    instagram: "https://www.instagram.com/creativekidsacademykubwa/",
+    instagram: "https://www.instagram.com/ckehskubwa/",
     instagramSecondary: "https://www.instagram.com/ckehskubwa/",
   },
 
