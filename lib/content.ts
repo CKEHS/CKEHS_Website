@@ -243,9 +243,9 @@ export type EventItem = {
 };
 
 export const events: EventItem[] = [
-  { date: "2026-08-09", title: "Open Day", desc: "Come and see the school for yourself — tour the campus, meet our teachers and explore the classrooms.", color: "sky", image: "/photos/campus.jpg" },
-  { date: "2026-08-21", title: "Robotics & Art Exhibition", desc: "Our pupils showcase what they've built and created this term, from coding projects to canvas.", color: "sun", image: "/photos/stem-robotics.jpg" },
-  { date: "2026-08-24", title: "Parents–Teachers Forum", desc: "An open conversation between families and staff about each child's progress and the term ahead.", color: "coral", image: "/photos/community-outreach.jpg" },
+  { date: "2026-06-09", title: "Open Day", desc: "Come and see the school for yourself — tour the campus, meet our teachers and explore the classrooms.", color: "sky", image: "/photos/campus.jpg" },
+  { date: "2026-06-21", title: "Robotics & Art Exhibition", desc: "Our pupils showcase what they've built and created this term, from coding projects to canvas.", color: "sun", image: "/photos/stem-robotics.jpg" },
+  { date: "2026-06-24", title: "Parents–Teachers Forum", desc: "An open conversation between families and staff about each child's progress and the term ahead.", color: "coral", image: "/photos/community-outreach.jpg" },
   { date: "2026-06-08", title: "Cultural Day", desc: "An open conversation between families and staff about each child's progress and the term ahead.", color: "mint", image: "/photos/community-outreach.jpg" },
 
 ];
