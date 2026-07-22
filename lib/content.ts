@@ -205,6 +205,7 @@ export const director: {
   name: "Mrs T. K. Adedeji",
   role: "Director",
   initial: "A",
+  photo: "/staff/director.jpg",
   paragraphs: [
     "Dear Students, Parents, and Guardians, it gives me immense pleasure to welcome you all to our school. Creative Kids is an institution that believes in providing holistic education to every student, right from Playgroup to Secondary level — nurturing not just academic excellence, but character, social and emotional growth.",
     "We follow a comprehensive, innovative curriculum designed for the unique needs of every child, so each one can reach their full potential. Our faculty are highly qualified, experienced teachers who are passionate about guiding young minds in a safe, inclusive space where everyone is respected, valued and encouraged to grow.",
