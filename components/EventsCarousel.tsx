@@ -98,7 +98,7 @@ export function EventsCarousel({ nowFallback }: { nowFallback: number }) {
             alt={ev.title}
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
-            className="animate-fade-up object-cover"
+            className={`animate-fade-up ${ev.imageFit === "contain" ? "object-contain" : "object-cover object-top"}`}
           />
         </div>
         <div className={bodyWrap}>

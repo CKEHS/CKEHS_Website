@@ -180,14 +180,17 @@ export type Staff = {
 // Ordered by seniority. Photos are placeholders — drop a real headshot in at the
 // same path (e.g. public/staff/head-teacher.jpg) and it appears automatically.
 export const team: Staff[] = [
-  { name: "Mrs Qadri Omotola", role: "Head Teacher", initial: "Q", color: "sky", photo: "/staff/head-teacher.jpg", lead: true },
-  { name: "Mrs Durowaye Sophia", role: "Assistant Head Teacher", initial: "D", color: "coral", photo: "/staff/assistant-head-teacher.jpg" },
-  { name: "Mrs Anikoh Victoria", role: "Head of Nursery", initial: "V", color: "sun", photo: "/staff/head-nursery.jpg" },
-  { name: "Miss Liliberth Ukagah", role: "Assistant Head of Nursery", initial: "L", color: "mint", photo: "/staff/assistant-head-nursery.jpg" },
-  { name: "Mrs Olatunji Kemisola", role: "Head of Primary", initial: "K", color: "sky", photo: "/staff/head-primary.jpg" },
-  { name: "Mr Abdul Azeez Taiwo", role: "Secondary Coordinator", initial: "T", color: "coral", photo: "/staff/secondary-coord.jpg" },
-  { name: "Mr Aregbeshola Ridwan", role: "Examination Officer", initial: "R", color: "sun", photo: "/staff/exam-officer.jpg" },
-  { name: "Mrs Gafar Momodu", role: "Admin Officer", initial: "M", color: "mint", photo: "/staff/admin-officer.jpg" },
+  { name: "Mrs Momodu Gafar", role: "Head Of Schools (Principal)", initial: "M", color: "mint", photo: "/staff/principal.jpeg", lead: true  },
+  { name: "Mr Ayobola Ayodele", role: "School Consultant", initial: "A", color: "coral", photo: "/staff/school-consultant.jpeg" },
+  { name: "Mrs Joy Osegbat ", role: "Head Of Primary", initial: "J", color: "sun", photo: "/staff/head-primary.jpeg" },
+  { name: "Mrs Olatunji Kemisola", role: "Assistant Head of Primary", initial: "K", color: "sky", photo: "/staff/asst-head-primary.jpeg" },
+  { name: "Mrs Chiamaka Nwokoye", role: "Exam Officer 1", initial: "C", color: "sun", photo: "/staff/exam-officer1.jpeg" },
+  { name: "Mrs Liliberth Ukagah", role: "Head of Nursery", initial: "L", color: "mint", photo: "/staff/head-nursery.jpeg" },
+  { name: "Mrs Durowaye Sophia", role: "Quality Assurance", initial: "D", color: "coral", photo: "/staff/quality-assurance.jpeg" },
+  { name: "Mr Ridwan Aregbesola ", role: "Assitant Secondary School Coordinator", initial: "R", color: "sky", photo: "/staff/ss-coordinator.jpeg" },
+  { name: "Mr Freeman Awahntachi ", role: "Exam Officer 2", initial: "F", color: "mint", photo: "/staff/exam-officer2.jpeg" },
+  { name: "Mr Alo Adeboye Gbenga ", role: "ICT Coordinator", initial: "G", color: "sun", photo: "/staff/ict-coordinator.jpeg" },
+
 ];
 
 // The Director's welcome address (from the live site, lightly tidied).
@@ -240,13 +243,15 @@ export type EventItem = {
   desc: string;
   color: string;
   image: string;
+  imageFit?: "cover" | "contain"; // "contain" shows the whole photo uncropped
 };
 
 export const events: EventItem[] = [
   { date: "2026-06-09", title: "Open Day", desc: "Come and see the school for yourself — tour the campus, meet our teachers and explore the classrooms.", color: "sky", image: "/photos/campus.jpg" },
   { date: "2026-06-21", title: "Robotics & Art Exhibition", desc: "Our pupils showcase what they've built and created this term, from coding projects to canvas.", color: "sun", image: "/photos/stem-robotics.jpg" },
-  { date: "2026-06-24", title: "Parents–Teachers Forum", desc: "An open conversation between families and staff about each child's progress and the term ahead.", color: "coral", image: "/photos/community-outreach.jpg" },
+  { date: "2026-06-24", title: "Parent-Teachers Forum", desc: "An open conversation between families and staff about each child's progress and the term ahead.", color: "coral", image: "/photos/community-outreach.jpg" },
   { date: "2026-06-08", title: "Cultural Day", desc: "An open conversation between families and staff about each child's progress and the term ahead.", color: "mint", image: "/photos/community-outreach.jpg" },
+  { date: "2026-08-31", title: "Entrance Exams", desc: "Our entrance examination assesses each applicant's academic ability to support appropriate class placement.", color: "mint", image: "/photos/entrance-exam.jpg" },
 
 ];
 

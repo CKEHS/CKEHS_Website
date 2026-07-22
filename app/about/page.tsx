@@ -3,6 +3,7 @@ import Image from "next/image";
 import { ArrowRight, ArrowDown } from "lucide-react";
 import { Container, SectionHeading } from "@/components/ui/Section";
 import { RevealZoom } from "@/components/ui/RevealZoom";
+import { StaffSlideshow } from "@/components/StaffSlideshow";
 import { CtaBand } from "@/components/sections";
 import * as c from "@/lib/colors";
 import { timeline, team, director } from "@/lib/content";
@@ -147,27 +148,8 @@ export default function AboutPage() {
             intro="Every staff member at Creative Kids plays a critical role in delivering our vision of excellent education."
           />
 
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {team.map((s) => (
-              <div
-                key={s.name}
-                className="overflow-hidden rounded-[24px] border border-line bg-white shadow-[0_8px_24px_rgba(18,40,75,0.06)]"
-              >
-                <div className="relative aspect-[4/5]">
-                  {s.photo ? (
-                    <Image src={s.photo} alt={s.name} fill sizes="(max-width:1024px) 50vw, 300px" className="object-cover object-top" />
-                  ) : (
-                    <div className={`flex h-full w-full items-center justify-center ${c.bg[s.color as c.Accent]}`}>
-                      <span className={`font-fred text-5xl font-bold ${c.onColorText[s.color as c.Accent]}`}>{s.initial}</span>
-                    </div>
-                  )}
-                </div>
-                <div className="p-5">
-                  <div className="font-fred text-lg font-bold text-navy">{s.name}</div>
-                  <div className={`mt-0.5 text-sm font-bold ${c.text[s.color as c.Accent]}`}>{s.role}</div>
-                </div>
-              </div>
-            ))}
+          <div className="mt-10">
+            <StaffSlideshow staff={team} />
           </div>
         </Container>
       </section>

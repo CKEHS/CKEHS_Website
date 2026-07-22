@@ -1,4 +1,5 @@
-import Image from "next/image";
+import fs from "node:fs";
+import path from "node:path";
 import { Container, SectionHeading } from "@/components/ui/Section";
 import { ButtonLink } from "@/components/ui/Button";
 import {
@@ -9,9 +10,22 @@ import {
   CtaBand,
 } from "@/components/sections";
 import { EventsCarousel } from "@/components/EventsCarousel";
+import { HeroSlideshow } from "@/components/HeroSlideshow";
 import { site } from "@/lib/site";
 
+const HERO_DIR = path.join(process.cwd(), "public/photos/hero");
+const IMAGE_EXT = /\.(jpe?g|png|webp)$/i;
+
+function getHeroImages(): string[] {
+  return fs
+    .readdirSync(HERO_DIR)
+    .filter((f) => IMAGE_EXT.test(f))
+    .sort()
+    .map((f) => `/photos/hero/${f}`);
+}
+
 export default function HomePage() {
+  const heroImages = getHeroImages();
   return (
     <>
       {/* HERO */}
@@ -50,15 +64,8 @@ export default function HomePage() {
 
           <div className="relative min-w-[300px] flex-1 basis-[360px]">
             <div className="absolute left-4 top-4 h-full w-full rounded-[34px] bg-sun" />
-            <div className="relative aspect-[4/3] overflow-hidden rounded-[34px] border-[6px] border-white shadow-[0_24px_50px_rgba(18,40,75,0.22)]">
-              <Image
-                src="/photos/home-hero.jpg"
-                alt="Creative Kids Academy pupils celebrating Cultural Day"
-                fill
-                priority
-                sizes="(max-width: 1024px) 100vw, 560px"
-                className="object-cover"
-              />
+            <div className="relative aspect-[3/2] overflow-hidden rounded-[34px] border-[6px] border-white shadow-[0_24px_50px_rgba(18,40,75,0.22)]">
+              <HeroSlideshow images={heroImages} alt="Creative Kids Academy pupils" />
             </div>
             <div className="absolute -bottom-6 -left-4 flex items-center gap-3 rounded-[20px] bg-white px-5 py-3.5 shadow-[0_12px_30px_rgba(18,40,75,0.16)]">
               <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#e7f7ee]">
